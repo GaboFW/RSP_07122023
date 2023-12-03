@@ -39,7 +39,7 @@ namespace FrmView
         //en el fomrulario el tiempo transucurrido
         private void MostrarConteo(double tiempo)
         {
-            
+            //IF TIEMPOMEDIODEPREPARACION Y MOSTRAR EL CONTEO
 
             this.lblTiempo.Text = $"{tiempo} segundos";
             this.lblTmp.Text = $"{this.hamburguesero.TiempoMedioDePreparacion.ToString("00.0")} segundos";
