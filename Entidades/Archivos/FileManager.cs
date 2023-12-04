@@ -32,12 +32,12 @@ namespace Entidades.Files
                 {
                     Directory.CreateDirectory(path);
 
-                    throw new FileManagerException("Error al crear el directorio, se tuvo que crear uno");
+                    throw new FileManagerException("Error al crear el directorio");
                 }
             }
             catch (FileManagerException ex)
             {
-                FileManager.Guardar(ex.Message, "logs.txt", true);
+                FileManager.Guardar(ex.Message, "logs.txt", false);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Entidades.Files
             }
             catch (FileManagerException ex)
             {
-                FileManager.Guardar(ex.Message, "logs.txt", true);
+                FileManager.Guardar(ex.Message, "logs.txt", false);
             }
 
             return true;
