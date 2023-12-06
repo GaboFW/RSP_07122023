@@ -7,11 +7,11 @@ namespace Entidades.MetodosDeExtension
     {
         public static double CalcularCostolngrediente(this List<EIngrediente> ingredientes, int costoInicial)
         {
-            int costoTotal = costoInicial;
+            double costoTotal = costoInicial;
 
-            foreach (var item in ingredientes)
+            foreach (EIngrediente ingrediente in ingredientes)
             {
-                costoTotal += (int)item;
+                costoTotal += costoInicial * (double)ingrediente / 100;
             }
 
             return costoTotal;

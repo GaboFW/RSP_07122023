@@ -11,7 +11,7 @@ namespace Entidades.Files
         {
             path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            path = Path.Combine(path, "Prueba tp");//NOMBRE CARPETA
+            path = Path.Combine(path, "Prueba tp");
 
             ValidaExistenciaDeDirectorio();
         }
@@ -56,7 +56,7 @@ namespace Entidades.Files
             {
                 string fullPath = Path.Combine(path, nombreArchivo);
                 string jsonString = JsonSerializer.Serialize(elemento);
-                File.WriteAllText(fullPath, jsonString);
+                File.WriteAllText(fullPath, jsonString); //ROMPE
             }
             catch (FileManagerException ex)
             {

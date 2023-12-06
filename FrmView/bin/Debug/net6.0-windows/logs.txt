@@ -1,1 +1,1 @@
-The connection was not closed. The connection's current state is open.
+There are more columns in the INSERT statement than values specified in the VALUES clause. The number of values in the VALUES clause must match the number of columns specified in the INSERT statement.

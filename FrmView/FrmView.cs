@@ -89,7 +89,7 @@ namespace FrmView
         {
             //Alumno: Serializar el cocinero antes de cerrar el formulario
 
-            FileManager.Serializar(this.hamburguesero, ""); //ponerle nombre
+            FileManager.Serializar(this.hamburguesero, "Prueba tp.txt");
         }
     }
 }

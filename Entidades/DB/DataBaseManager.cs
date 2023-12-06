@@ -18,8 +18,6 @@ namespace Entidades.DataBase
 
         public static string GetImagenComida(string tipo)
         {
-            string resultado = null;
-
             try
             {
                 string consulta = "SELECT * FROM comidas WHERE tipo_comida = @Tipo";
@@ -47,9 +45,13 @@ namespace Entidades.DataBase
             catch (Exception ex)
             {
                 FileManager.Guardar(ex.Message, "logs.txt", false);
-            }
 
-            return resultado;
+                throw new ComidaInvalidaExeption("asd");
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public static bool GuardarTicket<T>(string nombreEmpleado, T comida) where T : IComestible
@@ -58,11 +60,11 @@ namespace Entidades.DataBase
             
             try
             {
-                string consulta = "INSERT INTO Tickets (NombreEmpleado, Ticket) VALUES (@nombreEmpleado, @Ticket)";
+                string consulta = "INSERT INTO Tickets (Empleado, Ticket) VALUES (@Empleado, @Ticket)";
 
                 using (SqlCommand command = new SqlCommand(consulta, connection))
                 {
-                    command.Parameters.AddWithValue("@empleado", nombreEmpleado);
+                    command.Parameters.AddWithValue("@Empleado", nombreEmpleado);
                     command.Parameters.AddWithValue("@Ticket", comida.Ticket);
                     connection.Open();
 
@@ -78,7 +80,7 @@ namespace Entidades.DataBase
             {
                 FileManager.Guardar(ex.Message, "logs.txt", false);
 
-                throw new DataBaseManagerException("No se pudo guardar el ticket. Detalles: " + ex.Message, ex);
+                throw new DataBaseManagerException("No se pudo guardar el ticket: ", ex);
             }
             finally
             {
