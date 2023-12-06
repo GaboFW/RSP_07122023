@@ -46,3 +46,4 @@ F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\Entidades\obj
 F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\Entidades\obj\Debug\net6.0\refint\Entidades.dll
 F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\Entidades\obj\Debug\net6.0\Entidades.pdb
 F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\Entidades\obj\Debug\net6.0\ref\Entidades.dll
+F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\Entidades\obj\Debug\net6.0\Entidades.sourcelink.json

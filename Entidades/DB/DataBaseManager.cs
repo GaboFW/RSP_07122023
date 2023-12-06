@@ -1,6 +1,7 @@
 ﻿using System.Data.SqlClient;
 using Entidades.Excepciones;
 using Entidades.Exceptions;
+using Entidades.Files;
 using Entidades.Interfaces;
 
 namespace Entidades.DataBase
@@ -21,7 +22,7 @@ namespace Entidades.DataBase
 
             try
             {
-                string consulta = "SELECT * FROM Comidas WHERE Tipo = @Tipo";
+                string consulta = "SELECT * FROM comidas WHERE tipo_comida = @Tipo";
 
                 using (SqlCommand command = new SqlCommand(consulta, connection))
                 {
@@ -34,7 +35,7 @@ namespace Entidades.DataBase
                         {
                             reader.Read();
 
-                            resultado = reader.GetString(1);
+                            return reader["imagen"].ToString();
                         }
                         else
                         {
@@ -45,7 +46,7 @@ namespace Entidades.DataBase
             }
             catch (Exception ex)
             {
-                throw new DataBaseManagerException("Error al encontrar el tipo: ", ex);
+                FileManager.Guardar(ex.Message, "logs.txt", false);
             }
 
             return resultado;
@@ -57,12 +58,12 @@ namespace Entidades.DataBase
             
             try
             {
-                string consulta = "INSERT INTO Tickets (NombreEmpleado, Comida) VALUES (@NombreEmpleado, @Comida)";
+                string consulta = "INSERT INTO Tickets (NombreEmpleado, Ticket) VALUES (@nombreEmpleado, @Ticket)";
 
                 using (SqlCommand command = new SqlCommand(consulta, connection))
                 {
-                    command.Parameters.AddWithValue("@NombreEmpleado", nombreEmpleado);
-                    command.Parameters.AddWithValue("@Comida", comida.Ticket);
+                    command.Parameters.AddWithValue("@empleado", nombreEmpleado);
+                    command.Parameters.AddWithValue("@Ticket", comida.Ticket);
                     connection.Open();
 
                     int affectedRows = command.ExecuteNonQuery();
@@ -75,7 +76,13 @@ namespace Entidades.DataBase
             }
             catch (Exception ex)
             {
-                throw new DataBaseManagerException("No se pudo guardar el ticket por: ", ex);
+                FileManager.Guardar(ex.Message, "logs.txt", false);
+
+                throw new DataBaseManagerException("No se pudo guardar el ticket. Detalles: " + ex.Message, ex);
+            }
+            finally
+            {
+                connection.Close();
             }
 
             return result;

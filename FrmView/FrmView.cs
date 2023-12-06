@@ -21,31 +21,35 @@ namespace FrmView
             this.hamburguesero.OnIngreso += this.MostrarComida;
         }
 
-
         //Alumno: Realizar los cambios necesarios sobre MostrarComida de manera que se refleje
         //en el formulario los datos de la comida
         private void MostrarComida(IComestible comida)
         {
-            
-            this.comidas.Enqueue(comida);
-            this.pcbComida.Load(comida.Imagen);
-            this.rchElaborando.Text = comida.ToString();
-
+            if (!this.InvokeRequired)
+            {
+                this.comidas.Enqueue(comida);
+                this.pcbComida.Load(comida.Imagen);
+                this.rchElaborando.Text = comida.ToString();
+            }
+            else
+            {
+                this.Invoke(new Action(() => MostrarComida(comida)));
+            }
         }
-
-
 
         //Alumno: Realizar los cambios necesarios sobre MostrarConteo de manera que se refleje
         //en el fomrulario el tiempo transucurrido
         private void MostrarConteo(double tiempo)
         {
-            //IF TIEMPOMEDIODEPREPARACION Y MOSTRAR EL CONTEO
-
-            this.lblTiempo.Text = $"{tiempo} segundos";
-            this.lblTmp.Text = $"{this.hamburguesero.TiempoMedioDePreparacion.ToString("00.0")} segundos";
-
-
-
+            if(!this.InvokeRequired)
+            {
+                this.lblTiempo.Text = $"{tiempo} segundos";
+                this.lblTmp.Text = $"{this.hamburguesero.TiempoMedioDePreparacion.ToString("00.0")} segundos";
+            }
+            else
+            {
+                this.Invoke(new Action(() => MostrarConteo(tiempo)));
+            }
         }
 
         private void ActualizarAtendidos(IComestible comida)
@@ -85,7 +89,7 @@ namespace FrmView
         {
             //Alumno: Serializar el cocinero antes de cerrar el formulario
 
-            FileManager.Serializar(comidas, "Ventas");
+            FileManager.Serializar(this.hamburguesero, ""); //ponerle nombre
         }
     }
 }

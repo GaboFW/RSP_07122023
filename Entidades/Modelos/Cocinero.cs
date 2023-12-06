@@ -57,46 +57,47 @@ namespace Entidades.Modelos
 
         private void IniciarIngreso()
         {
-            while (this.HabilitarCocina)
+            tarea = Task.Run(() =>
             {
-                this.tarea = Task.Run(NotificarNuevoIngreso);
+                while (!cancellation.IsCancellationRequested)
+                {
+                    NotificarNuevoIngreso();
+                    EsperarProximoIngreso();
+                    cantPedidosFinalizados++;
+                    DataBaseManager.GuardarTicket<T>(nombre, menu);
 
-                this.cantPedidosFinalizados++;
-
-                DataBaseManager.GuardarTicket(this.nombre, this.menu);
-
-                Task.Delay(3000);
-            }
+                }
+            }, cancellation.Token);
         }
 
         private void NotificarNuevoIngreso()
         {
-            while (true)
+            if (OnIngreso is not null)
             {
-                this.menu = new T();
-                this.menu.IniciarPreparacion();
+                menu = new T();
 
-                if (this.OnIngreso is not null)
-                {
-                    this.EsperarProximoIngreso();
-                }
-                else
-                {
-                    this.OnIngreso.Invoke(menu);
-                }
+                menu.IniciarPreparacion();
+
+                OnIngreso.Invoke(menu);
             }
         }
 
         private void EsperarProximoIngreso()
         {
-            int tiempoEspera = 0;
-            if (this.OnDemora is not null)
+            if (OnDemora is not null)
             {
-                this.demoraPreparacionTotal += tiempoEspera;
-            }
-            else
-            {
-                this.OnDemora.Invoke(this.demoraPreparacionTotal);
+                int tiempoEspera = 0;
+
+                while (!menu.Estado && !cancellation.IsCancellationRequested)
+                {
+                    OnDemora.Invoke(tiempoEspera);
+
+                    Thread.Sleep(1000);
+
+                    tiempoEspera += 1;
+                }
+
+                demoraPreparacionTotal += tiempoEspera;
             }
         }
     }

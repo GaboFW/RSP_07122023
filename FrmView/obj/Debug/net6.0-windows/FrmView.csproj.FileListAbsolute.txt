@@ -106,3 +106,4 @@ F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\FrmView\obj\D
 F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\FrmView\obj\Debug\net6.0-windows\FrmView.pdb
 F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\FrmView\obj\Debug\net6.0-windows\FrmView.genruntimeconfig.cache
 F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\FrmView\obj\Debug\net6.0-windows\ref\FrmView.dll
+F:\ProgramData\Microsoft\VisualStudio\Repos\2da Parte\RSP_07122023\FrmView\obj\Debug\net6.0-windows\FrmView.sourcelink.json
