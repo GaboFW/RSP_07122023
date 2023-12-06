@@ -44,9 +44,9 @@ namespace Entidades.DataBase
             }
             catch (Exception ex)
             {
-                FileManager.Guardar(ex.Message, "logs.txt", false);
+                FileManager.Guardar(ex.Message, "logs.txt", true);
 
-                throw new ComidaInvalidaExeption("asd");
+                throw new ComidaInvalidaExeption("Error al encontrar la imagen");
             }
             finally
             {
@@ -54,7 +54,7 @@ namespace Entidades.DataBase
             }
         }
 
-        public static bool GuardarTicket<T>(string nombreEmpleado, T comida) where T : IComestible
+        public static bool GuardarTicket<T>(string nombreEmpleado, T comida) where T : IComestible, new()
         {
             bool result = false;
             
@@ -78,7 +78,7 @@ namespace Entidades.DataBase
             }
             catch (Exception ex)
             {
-                FileManager.Guardar(ex.Message, "logs.txt", false);
+                FileManager.Guardar(ex.Message, "logs.txt", true);
 
                 throw new DataBaseManagerException("No se pudo guardar el ticket: ", ex);
             }

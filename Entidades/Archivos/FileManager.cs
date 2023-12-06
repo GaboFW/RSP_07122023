@@ -29,19 +29,23 @@ namespace Entidades.Files
             }
             catch (FileManagerException ex)
             {
-                FileManager.Guardar(ex.Message, "logs.txt", false);
+                FileManager.Guardar(ex.Message, "logs.txt", true);
             }
         }
 
         public static void Guardar(string data, string nombreArchivo, bool append)
         {
+            string rutaArchivo = Path.Combine(path, nombreArchivo);
+
             try
             {
-                string rutaCompleta = Path.Combine(Environment.CurrentDirectory, nombreArchivo);
-
-                using (StreamWriter writer = new StreamWriter(rutaCompleta, append))
+                if (append)
                 {
-                    writer.WriteLine(data);
+                    File.AppendAllText(rutaArchivo, data);
+                }
+                else
+                {
+                    File.WriteAllText(rutaArchivo, data);
                 }
             }
             catch (FileManagerException ex)
@@ -56,11 +60,11 @@ namespace Entidades.Files
             {
                 string fullPath = Path.Combine(path, nombreArchivo);
                 string jsonString = JsonSerializer.Serialize(elemento);
-                File.WriteAllText(fullPath, jsonString); //ROMPE
+                File.WriteAllText(fullPath, jsonString);
             }
             catch (FileManagerException ex)
             {
-                FileManager.Guardar(ex.Message, "logs.txt", false);
+                FileManager.Guardar(ex.Message, "logs.txt", true);
             }
 
             return true;

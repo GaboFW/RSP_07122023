@@ -35,7 +35,7 @@ namespace Entidades.Modelos
 
         private void AgregarIngredientes()
         {
-            ingredientes = this.random.IngredientesAleatorios();
+            this.ingredientes = this.random.IngredientesAleatorios();
         }
 
         private string MostrarDatos()

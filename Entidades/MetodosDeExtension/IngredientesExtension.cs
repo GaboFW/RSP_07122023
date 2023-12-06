@@ -9,9 +9,9 @@ namespace Entidades.MetodosDeExtension
         {
             double costoTotal = costoInicial;
 
-            foreach (EIngrediente ingrediente in ingredientes)
+            foreach (EIngrediente i in ingredientes)
             {
-                costoTotal += costoInicial * (double)ingrediente / 100;
+                costoTotal += costoInicial * (double)i / 100;
             }
 
             return costoTotal;

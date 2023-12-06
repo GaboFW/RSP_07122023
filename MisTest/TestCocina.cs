@@ -12,7 +12,6 @@ namespace MisTest
         public void AlGuardarUnArchivo_ConNombreInvalido_TengoUnaExcepcion()
         {
             //arrange
-            //FileManager.Guardar()
 
             //act
 
