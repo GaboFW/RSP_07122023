@@ -8,15 +8,12 @@ namespace FrmView
 {
     public partial class FrmView : Form
     {
-        private Queue<IComestible> comidas;
         Cocinero<Hamburguesa> hamburguesero;
-
-        private IComestible comida;
+        private IComestible comidas;
 
         public FrmView()
         {
             InitializeComponent();
-            //this.comidas = new Queue<IComestible>();
             this.hamburguesero = new Cocinero<Hamburguesa>("Ramon");
             //Alumno - agregar manejadores al cocinero
             this.hamburguesero.OnDemora += this.MostrarConteo;
@@ -29,7 +26,7 @@ namespace FrmView
         {
             if (!this.InvokeRequired)
             {
-                this.comidas.Enqueue(comida);
+                this.comidas = comida;
                 this.pcbComida.Load(comida.Imagen);
                 this.rchElaborando.Text = comida.ToString();
             }
@@ -54,11 +51,6 @@ namespace FrmView
             }
         }
 
-        private void ActualizarAtendidos(IComestible comida)
-        {
-            this.rchFinalizados.Text += "\n" + comida.Ticket;
-        }
-
         private void btnAbrir_Click(object sender, EventArgs e)
         {
             if (!this.hamburguesero.HabilitarCocina)
@@ -77,11 +69,11 @@ namespace FrmView
         {
             if (this.comidas is not null)
             {
-                // IComestible comida = this.comidas.Dequeue();
-                comida.FinalizarPreparacion(this.hamburguesero.Nombre);
-                this.ActualizarAtendidos(comida);
+                comidas.FinalizarPreparacion(this.hamburguesero.Nombre);
 
-                this.comida = null;
+                this.rchFinalizados.Text += "\n" + comidas.Ticket;
+
+                this.comidas = null;
             }
             else
             {
