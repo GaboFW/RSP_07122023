@@ -1,5 +1,6 @@
 using Entidades.Exceptions;
 using Entidades.Files;
+using Entidades.Interfaces;
 using Entidades.Modelos;
 
 namespace MisTest
@@ -11,23 +12,18 @@ namespace MisTest
         [ExpectedException(typeof(FileManagerException))]
         public void AlGuardarUnArchivo_ConNombreInvalido_TengoUnaExcepcion()
         {
-            //arrange
-
-            //act
-
-            //assert
+            FileManager.Guardar("Prueba", "\".cmd prueba\"", true);
         }
 
         [TestMethod]
-
         public void AlInstanciarUnCocinero_SeEspera_PedidosCero()
         {
-            //arrange
+            string nombreCocinero = "CocineroPrueba";
 
+            Cocinero<Hamburguesa> cocinero;
+            cocinero = new Cocinero<Hamburguesa>(nombreCocinero);
 
-            //act
-
-            //assert
+            Assert.AreEqual(0, cocinero.CantPedidosFinalizados);
         }
     }
 }

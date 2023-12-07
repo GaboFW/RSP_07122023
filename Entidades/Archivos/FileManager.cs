@@ -30,6 +30,8 @@ namespace Entidades.Files
             catch (FileManagerException ex)
             {
                 FileManager.Guardar(ex.Message, "logs.txt", true);
+
+                throw new FileManagerException("Error al validar directorio", ex);
             }
         }
 
@@ -39,18 +41,17 @@ namespace Entidades.Files
 
             try
             {
-                if (append)
+                using (StreamWriter sw = new StreamWriter(rutaArchivo, append))
                 {
-                    File.AppendAllText(rutaArchivo, data);
-                }
-                else
-                {
-                    File.WriteAllText(rutaArchivo, data);
+                    // Escribir el texto al final del archivo
+                    sw.WriteLine(data);
                 }
             }
-            catch (FileManagerException ex)
+            catch (Exception ex)
             {
                 FileManager.Guardar(ex.Message, "logs.txt", true);
+
+                throw new FileManagerException("Error al guardar", ex);
             }
         }
 
@@ -65,6 +66,8 @@ namespace Entidades.Files
             catch (FileManagerException ex)
             {
                 FileManager.Guardar(ex.Message, "logs.txt", true);
+
+                throw new FileManagerException("Error al Serializar", ex);
             }
 
             return true;
