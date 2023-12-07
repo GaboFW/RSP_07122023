@@ -62,7 +62,7 @@ namespace Entidades.Modelos
             {
                 int numeroRandom = this.random.Next(1, 9);
 
-                imagen = DataBaseManager.GetImagenComida($"Hamburguesa_{numeroRandom}");
+                this.imagen = DataBaseManager.GetImagenComida($"Hamburguesa_{numeroRandom}");
 
                 this.AgregarIngredientes();
             }
