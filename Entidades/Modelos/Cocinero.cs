@@ -112,7 +112,7 @@ namespace Entidades.Modelos
         {
             if (this.OnPedido is not null)
             {
-                this.OnPedido.Invoke(menu);
+                this.pedidos.Enqueue(menu);
             }
         }
     }

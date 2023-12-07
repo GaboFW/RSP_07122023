@@ -11,10 +11,12 @@ namespace FrmView
         private Queue<IComestible> comidas;
         Cocinero<Hamburguesa> hamburguesero;
 
+        private IComestible comida;
+
         public FrmView()
         {
             InitializeComponent();
-            this.comidas = new Queue<IComestible>();
+            //this.comidas = new Queue<IComestible>();
             this.hamburguesero = new Cocinero<Hamburguesa>("Ramon");
             //Alumno - agregar manejadores al cocinero
             this.hamburguesero.OnDemora += this.MostrarConteo;
@@ -75,9 +77,11 @@ namespace FrmView
         {
             if (this.comidas is not null)
             {
-                IComestible comida = this.comidas.Dequeue();
+                // IComestible comida = this.comidas.Dequeue();
                 comida.FinalizarPreparacion(this.hamburguesero.Nombre);
                 this.ActualizarAtendidos(comida);
+
+                this.comida = null;
             }
             else
             {
