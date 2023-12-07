@@ -1,7 +1,7 @@
-using Entidades.Exceptions;
 using Entidades.Files;
 using Entidades.Interfaces;
 using Entidades.Modelos;
+using System.Security.Cryptography.X509Certificates;
 
 
 namespace FrmView
@@ -18,7 +18,7 @@ namespace FrmView
             this.hamburguesero = new Cocinero<Hamburguesa>("Ramon");
             //Alumno - agregar manejadores al cocinero
             this.hamburguesero.OnDemora += this.MostrarConteo;
-            this.hamburguesero.OnIngreso += this.MostrarComida;
+            this.hamburguesero.OnPedido += this.MostrarComida;
         }
 
         //Alumno: Realizar los cambios necesarios sobre MostrarComida de manera que se refleje
@@ -41,7 +41,7 @@ namespace FrmView
         //en el fomrulario el tiempo transucurrido
         private void MostrarConteo(double tiempo)
         {
-            if(!this.InvokeRequired)
+            if (!this.InvokeRequired)
             {
                 this.lblTiempo.Text = $"{tiempo} segundos";
                 this.lblTmp.Text = $"{this.hamburguesero.TiempoMedioDePreparacion.ToString("00.0")} segundos";
@@ -73,7 +73,7 @@ namespace FrmView
 
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
-            if (this.comidas.Count > 0)
+            if (this.comidas is not null)
             {
                 IComestible comida = this.comidas.Dequeue();
                 comida.FinalizarPreparacion(this.hamburguesero.Nombre);

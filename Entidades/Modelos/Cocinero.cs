@@ -4,10 +4,15 @@ using Entidades.Interfaces;
 namespace Entidades.Modelos
 {
     public delegate void DelegadoDemoraAtencion(double demora);
-    public delegate void DelegadoNuevoIngreso(IComestible menu);
+    public delegate void DelegadoPedidoEnCurso(IComestible menu);
 
     public class Cocinero<T> where T : IComestible, new()
     {
+        // 07-12-2023
+        private Mozo<T> mozo;
+        private Queue<T> pedidos;
+        //
+
         private int cantPedidosFinalizados;
         private string nombre;
         private double demoraPreparacionTotal;
@@ -17,11 +22,16 @@ namespace Entidades.Modelos
         private Task tarea;
 
         public event DelegadoDemoraAtencion OnDemora;
-        public event DelegadoNuevoIngreso OnIngreso;
+        public event DelegadoPedidoEnCurso OnPedido;
 
         public Cocinero(string nombre)
         {
             this.nombre = nombre;
+
+            // 07-12-2023
+            this.mozo = new Mozo<T>();
+            this.Pedidos = new Queue<T>();
+            this.mozo.OnPedido += TomarNuevoPedido; 
         }
 
         //No hacer nada
@@ -38,10 +48,15 @@ namespace Entidades.Modelos
                 if (value && !this.HabilitarCocina)
                 {
                     this.cancellation = new CancellationTokenSource();
-                    this.IniciarIngreso();
+
+                    this.mozo.EmpezarATrabajar = value;
+
+                    this.EmpezarACocinar();
                 }
                 else
                 {
+                    this.mozo.EmpezarATrabajar = !value;
+
                     this.cancellation.Cancel();
                 }
             }
@@ -54,31 +69,24 @@ namespace Entidades.Modelos
 
         public int CantPedidosFinalizados { get => cantPedidosFinalizados; }
 
-        private void IniciarIngreso()
+        // 07-12-2023
+        public Queue<T> Pedidos { get; }
+        //
+
+        private void EmpezarACocinar()
         {
             this.tarea = Task.Run(() =>
             { 
                 while (!cancellation.IsCancellationRequested)
                 {
-                    NotificarNuevoIngreso();
+                    this.pedidos.Dequeue(); //ARREGLAR
+
                     EsperarProximoIngreso();
                     this.cantPedidosFinalizados++;
                     DataBaseManager.GuardarTicket<T>(this.nombre, this.menu);
 
                 }
             }, cancellation.Token);
-        }
-
-        private void NotificarNuevoIngreso()
-        {
-            if (this.OnIngreso is not null)
-            {
-                this.menu = new T();
-
-                this.menu.IniciarPreparacion();
-
-                this.OnIngreso.Invoke(this.menu);
-            }
         }
 
         private void EsperarProximoIngreso()
@@ -97,6 +105,14 @@ namespace Entidades.Modelos
                 }
 
                 this.demoraPreparacionTotal += tiempoEspera;
+            }
+        }
+
+        private void TomarNuevoPedido(T menu)
+        {
+            if (this.OnPedido is not null)
+            {
+                this.OnPedido.Invoke(menu);
             }
         }
     }
