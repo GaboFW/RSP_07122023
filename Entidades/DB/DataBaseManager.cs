@@ -9,7 +9,7 @@ namespace Entidades.DataBase
     public static class DataBaseManager
     {
         private static SqlConnection connection;
-        private static string stringConnection = "Server = DESKTOP-GKRBQF4; Database = 20230622SP;Trusted_Connection = True;";
+        private static string stringConnection = "Server = .; Database = 20230622SP;Trusted_Connection = True;";
 
         static DataBaseManager()
         {

@@ -31,7 +31,7 @@ namespace Entidades.Modelos
 
         public bool Estado { get { return this.estado; } }
 
-        public string Imagen { get { return imagen; } }
+        public string Imagen { get { return this.imagen; } }
 
         private void AgregarIngredientes()
         {
