@@ -43,7 +43,6 @@ namespace Entidades.Files
             {
                 using (StreamWriter sw = new StreamWriter(rutaArchivo, append))
                 {
-                    // Escribir el texto al final del archivo
                     sw.WriteLine(data);
                 }
             }
