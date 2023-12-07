@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MisTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e1add90ab18a8763ecc82e26cb5ba7a74e4d3f5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3bfa3d34d50974bd478720aac3104b0d817d0d0")]
 [assembly: System.Reflection.AssemblyProductAttribute("MisTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MisTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

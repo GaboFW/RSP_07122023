@@ -18,10 +18,8 @@ namespace MisTest
         [TestMethod]
         public void AlInstanciarUnCocinero_SeEspera_PedidosCero()
         {
-            string nombreCocinero = "CocineroPrueba";
-
             Cocinero<Hamburguesa> cocinero;
-            cocinero = new Cocinero<Hamburguesa>(nombreCocinero);
+            cocinero = new Cocinero<Hamburguesa>("CocineroPrueba");
 
             Assert.AreEqual(0, cocinero.CantPedidosFinalizados);
         }
