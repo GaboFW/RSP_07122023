@@ -17,7 +17,7 @@ namespace Entidades.Modelos
         private string nombre;
         private double demoraPreparacionTotal;
         private CancellationTokenSource cancellation;
-        private T menu;
+        private T pedidoEnPreparacion;
 
         private Task tarea;
 
@@ -79,12 +79,13 @@ namespace Entidades.Modelos
             { 
                 while (!cancellation.IsCancellationRequested)
                 {
-                    this.pedidos.Dequeue(); //ARREGLAR
-
-                    EsperarProximoIngreso();
-                    this.cantPedidosFinalizados++;
-                    DataBaseManager.GuardarTicket<T>(this.nombre, this.menu);
-
+                    if (this.pedidos.Count > 0 && this.OnPedido is not null)
+                    {
+                        this.pedidoEnPreparacion = this.pedidos.Dequeue();
+                        EsperarProximoIngreso();
+                        this.cantPedidosFinalizados++;
+                        DataBaseManager.GuardarTicket<T>(this.nombre, this.pedidoEnPreparacion);
+                    }
                 }
             }, cancellation.Token);
         }
@@ -95,7 +96,7 @@ namespace Entidades.Modelos
             {
                 int tiempoEspera = 0;
 
-                while (!this.menu.Estado && !cancellation.IsCancellationRequested)
+                while (!this.pedidoEnPreparacion.Estado && !cancellation.IsCancellationRequested)
                 {
                     this.OnDemora.Invoke(tiempoEspera);
 
