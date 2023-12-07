@@ -1,6 +1,5 @@
 ﻿using Entidades.DataBase;
 using Entidades.Interfaces;
-using System.Net.Http.Headers;
 
 namespace Entidades.Modelos
 {
@@ -57,14 +56,14 @@ namespace Entidades.Modelos
 
         private void IniciarIngreso()
         {
-            tarea = Task.Run(() =>
-            {
+            this.tarea = Task.Run(() =>
+            { 
                 while (!cancellation.IsCancellationRequested)
                 {
                     NotificarNuevoIngreso();
                     EsperarProximoIngreso();
-                    cantPedidosFinalizados++;
-                    DataBaseManager.GuardarTicket<T>(nombre, menu);
+                    this.cantPedidosFinalizados++;
+                    DataBaseManager.GuardarTicket<T>(this.nombre, this.menu);
 
                 }
             }, cancellation.Token);
@@ -72,32 +71,32 @@ namespace Entidades.Modelos
 
         private void NotificarNuevoIngreso()
         {
-            if (OnIngreso is not null)
+            if (this.OnIngreso is not null)
             {
-                menu = new T();
+                this.menu = new T();
 
-                menu.IniciarPreparacion();
+                this.menu.IniciarPreparacion();
 
-                OnIngreso.Invoke(menu);
+                this.OnIngreso.Invoke(this.menu);
             }
         }
 
         private void EsperarProximoIngreso()
         {
-            if (OnDemora is not null)
+            if (this.OnDemora is not null)
             {
                 int tiempoEspera = 0;
 
-                while (!menu.Estado && !cancellation.IsCancellationRequested)
+                while (!this.menu.Estado && !cancellation.IsCancellationRequested)
                 {
-                    OnDemora.Invoke(tiempoEspera);
+                    this.OnDemora.Invoke(tiempoEspera);
 
                     Thread.Sleep(1000);
 
                     tiempoEspera += 1;
                 }
 
-                demoraPreparacionTotal += tiempoEspera;
+                this.demoraPreparacionTotal += tiempoEspera;
             }
         }
     }
